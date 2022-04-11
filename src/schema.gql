@@ -1,0 +1,45 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type LoginModel {
+  email: String!
+  id: ID!
+  token: String!
+  username: String!
+}
+
+type Mutation {
+  login(userData: UserLoginInput!): LoginModel!
+  register(userData: UserRegisterInput!): LoginModel!
+  update(userData: UserUpdateInput!): UserModel!
+}
+
+type Query {
+  me: UserModel!
+  user(id: String!): UserModel!
+  users: [UserModel!]!
+}
+
+input UserLoginInput {
+  email: String!
+  password: String!
+}
+
+type UserModel {
+  email: String!
+  id: ID!
+  username: String!
+}
+
+input UserRegisterInput {
+  email: String!
+  password: String!
+  username: String!
+}
+
+input UserUpdateInput {
+  email: String
+  password: String
+  username: String
+}
