@@ -12,7 +12,7 @@ services:
     ports:
       - 3000:3000
       - 9229:9229
-    command: npm run start:dev
+    command: sh seeding.sh
     env_file:
       - .env
     networks:

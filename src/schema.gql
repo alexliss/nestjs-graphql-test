@@ -2,6 +2,33 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CommentModel {
+  createdAt: DateTime!
+  id: ID!
+  parentId: ID!
+  postId: ID!
+  rating: Int!
+  text: String!
+  userId: ID!
+  username: String!
+}
+
+input CreateCommentInput {
+  parentId: String!
+  postId: ID!
+  text: String!
+}
+
+input CreatePostInput {
+  text: String
+  title: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type LoginModel {
   email: String!
   id: ID!
@@ -10,15 +37,46 @@ type LoginModel {
 }
 
 type Mutation {
+  create(comment: CreateCommentInput!): CommentModel!
+  delete(id: String!): CommentModel!
+  deletePost(id: String!): String!
+  edit(comment: UpdateCommentInput!, id: String!): CommentModel!
+  editPost(editedData: UpdatePostInput!, id: String!): PostModel!
   login(userData: UserLoginInput!): LoginModel!
+  newPost(post: CreatePostInput!): PostModel!
   register(userData: UserRegisterInput!): LoginModel!
   update(userData: UserUpdateInput!): UserModel!
+  voteComment(id: String!, vote: Float!): CommentModel!
+  votePost(id: String!, vote: Float!): PostModel!
+}
+
+type PostModel {
+  comments: [CommentModel!]
+  createdAt: DateTime!
+  id: ID!
+  rating: Int!
+  text: String
+  title: String!
+  userId: ID!
+  username: String!
 }
 
 type Query {
+  feed(settings: String!): [PostModel!]!
+  getById(id: String!): CommentModel!
+  getByPostId(postId: String!, sort: String!): [CommentModel!]!
   me: UserModel!
   user(id: String!): UserModel!
   users: [UserModel!]!
+}
+
+input UpdateCommentInput {
+  text: String
+}
+
+input UpdatePostInput {
+  text: String
+  title: String
 }
 
 input UserLoginInput {

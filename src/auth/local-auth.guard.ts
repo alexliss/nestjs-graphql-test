@@ -8,7 +8,6 @@ export class LocalAuthGuard extends AuthGuard('local') {
         const gqlReq = ctx.getContext().req;
         if (gqlReq) {
             const variables = JSON.parse(JSON.stringify(ctx.getArgs().userData))
-            console.log(variables)
             gqlReq.body = variables;
             return gqlReq;
         }
