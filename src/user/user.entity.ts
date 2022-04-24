@@ -1,6 +1,6 @@
 import { Comment } from "src/content/comment/comment.entity";
 import { Post } from "src/content/post/post.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
@@ -22,4 +22,10 @@ export class User {
 
     @OneToMany(() => Comment, comment => comment.user)
     comments: Comment[]
+
+    @CreateDateColumn()
+    createdAt: Date
+
+    @DeleteDateColumn()
+    deletedAt: Date
 }

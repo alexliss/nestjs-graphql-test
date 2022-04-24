@@ -1,4 +1,6 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, GraphQLISODateTime, ID, ObjectType } from "@nestjs/graphql";
+import { PaginatedCommentModel } from "src/content/comment/models/paginated-comment.model";
+import { PaginatedPostModel } from "src/content/post/models/paginated-post.model";
 
 @ObjectType()
 export class UserModel {
@@ -10,4 +12,13 @@ export class UserModel {
 
     @Field(type => String)
     email: string;
+
+    @Field(type => PaginatedPostModel)
+    posts: PaginatedPostModel
+
+    @Field(type => PaginatedCommentModel)
+    comments: PaginatedCommentModel
+
+    @Field(type => GraphQLISODateTime)
+    createdAt: Date
 }

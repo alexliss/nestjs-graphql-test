@@ -18,7 +18,7 @@ export default class CommentVoteSeed implements Seeder {
             randomIdx = Math.floor(Math.random() * comments.length)
             vote.commentId = comments[randomIdx].id
             return vote
-        }).createMany(400000)
+        }).createMany(40000)
 
     }
 }

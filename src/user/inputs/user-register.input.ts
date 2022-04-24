@@ -5,7 +5,7 @@ import { IsAlphanumeric, IsDefined, IsEmail, IsString, Length } from "class-vali
 export class UserRegisterInput {
     @Field()
     @IsString()
-    @Length(8, 16)
+    @Length(4, 16)
     @IsAlphanumeric()
     username: string
 

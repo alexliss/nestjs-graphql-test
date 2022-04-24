@@ -15,7 +15,7 @@ export class PostVote {
     @Column("int")
     vote: number
 
-    @ManyToOne(type => Post)
+    @ManyToOne(type => Post, { onDelete: "CASCADE" })
     post: Post
 
     @ManyToOne(type => User)

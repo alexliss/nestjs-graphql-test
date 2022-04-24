@@ -18,6 +18,6 @@ export default class CommentSeed implements Seeder {
             randomIdx = Math.floor(Math.random() * posts.length)
             comment.postId = posts[randomIdx].id
             return comment
-        }).createMany(100000)
+        }).createMany(10000)
     }
 }

@@ -1,5 +1,5 @@
 import { User } from "src/user/user.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 import { Comment } from "../comment/comment.entity";
 import { Content } from "../content";
 import { PostVote } from "./post-vote.entity";
@@ -21,4 +21,7 @@ export class Post extends Content {
 
     @OneToMany(() => PostVote, vote => vote.post, { nullable: true })
     votes: PostVote[]
+
+    @Column({ type: 'varchar', array: true, nullable: true, default: [] })
+    tags?: string[]
 }

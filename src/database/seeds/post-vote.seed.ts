@@ -18,6 +18,6 @@ export default class PostVoteSeed implements Seeder {
             randomIdx = Math.floor(Math.random() * posts.length)
             vote.postId = posts[randomIdx].id
             return vote
-        }).createMany(400000)
+        }).createMany(40000)
     }
 }

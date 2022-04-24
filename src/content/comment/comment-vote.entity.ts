@@ -15,9 +15,9 @@ export class CommentVote {
     @Column("int")
     vote: number
 
-    @ManyToOne(type => Comment, comment => comment.votes)
+    @ManyToOne(type => Comment, comment => comment.votes, { onDelete: "CASCADE" })
     comment: Comment
 
-    @ManyToOne(type => User)
+    @ManyToOne(type => User, user => user.comments)
     user: User
 }

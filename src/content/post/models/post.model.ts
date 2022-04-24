@@ -1,5 +1,6 @@
 import { Field, GraphQLISODateTime, ID, Int, ObjectType } from "@nestjs/graphql";
 import { CommentModel } from "src/content/comment/models/comment.model";
+import { PaginatedCommentModel } from "src/content/comment/models/paginated-comment.model";
 
 @ObjectType()
 export class PostModel {
@@ -24,6 +25,12 @@ export class PostModel {
     @Field(type => String, { nullable: true })
     text?: string
 
-    @Field(type => [CommentModel], { nullable: true })
-    comments?: CommentModel
+    @Field(type => [String], { nullable: true })
+    tags?: string[]
+
+    @Field(type => Int, { nullable: true })
+    commentsCount?: number
+
+    @Field(type => PaginatedCommentModel, { nullable: true })
+    comments?: PaginatedCommentModel
 }

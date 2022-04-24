@@ -8,6 +8,6 @@ export default class UserSeed implements Seeder {
         const users = await factory(User)().map(async user =>  {
             user.password = await argon2.hash(user.username)
             return user
-        }).createMany(1000)
+        }).createMany(100)
     }
 }

@@ -13,6 +13,11 @@ type CommentModel {
   username: String!
 }
 
+type CommentModelEdge {
+  cursor: String!
+  node: CommentModel!
+}
+
 input CreateCommentInput {
   parentId: String!
   postId: ID!
@@ -20,6 +25,7 @@ input CreateCommentInput {
 }
 
 input CreatePostInput {
+  tags: [String!]
   text: String
   title: String!
 }
@@ -30,8 +36,11 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type LoginModel {
+  comments: PaginatedCommentModel!
+  createdAt: DateTime!
   email: String!
   id: ID!
+  posts: PaginatedPostModel!
   token: String!
   username: String!
 }
@@ -46,28 +55,58 @@ type Mutation {
   newPost(post: CreatePostInput!): PostModel!
   register(userData: UserRegisterInput!): LoginModel!
   update(userData: UserUpdateInput!): UserModel!
-  voteComment(id: String!, vote: Float!): CommentModel!
-  votePost(id: String!, vote: Float!): PostModel!
+  voteComment(id: ID!, vote: Int!): CommentModel!
+  votePost(id: ID!, vote: Int!): PostModel!
+}
+
+type PaginatedCommentModel {
+  edges: [CommentModelEdge!]
+  hasNextPage: Boolean!
+  nodes: [CommentModel!]
+  totalCount: Int!
+}
+
+type PaginatedPostModel {
+  edges: [PostModelEdge!]
+  hasNextPage: Boolean!
+  nodes: [PostModel!]
+  totalCount: Int!
+}
+
+type PaginatedUserModel {
+  edges: [UserModelEdge!]
+  hasNextPage: Boolean!
+  nodes: [UserModel!]
+  totalCount: Int!
 }
 
 type PostModel {
-  comments: [CommentModel!]
+  comments: PaginatedCommentModel
+  commentsCount: Int
   createdAt: DateTime!
   id: ID!
   rating: Int!
+  tags: [String!]
   text: String
   title: String!
   userId: ID!
   username: String!
 }
 
+type PostModelEdge {
+  cursor: String!
+  node: PostModel!
+}
+
 type Query {
-  feed(settings: String!): [PostModel!]!
+  feed(lastCursor: String, offset: Float!, sortSetting: String!): PaginatedPostModel!
   getById(id: String!): CommentModel!
-  getByPostId(postId: String!, sort: String!): [CommentModel!]!
+  getByPostId(lastCursor: String, offset: Float!, postId: String!, sortSetting: String!): [CommentModel!]!
   me: UserModel!
+  post(id: String!): PostModel!
   user(id: String!): UserModel!
-  users: [UserModel!]!
+  userPosts(id: String!, lastCursor: String, offset: Float!, sortSetting: String!): PaginatedPostModel!
+  users(lastCursor: String, offset: Float!): PaginatedUserModel!
 }
 
 input UpdateCommentInput {
@@ -75,6 +114,7 @@ input UpdateCommentInput {
 }
 
 input UpdatePostInput {
+  tags: [String!]
   text: String
   title: String
 }
@@ -85,9 +125,17 @@ input UserLoginInput {
 }
 
 type UserModel {
+  comments: PaginatedCommentModel!
+  createdAt: DateTime!
   email: String!
   id: ID!
+  posts: PaginatedPostModel!
   username: String!
+}
+
+type UserModelEdge {
+  cursor: String!
+  node: UserModel!
 }
 
 input UserRegisterInput {
